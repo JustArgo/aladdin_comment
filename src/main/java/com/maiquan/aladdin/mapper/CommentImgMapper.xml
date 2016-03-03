@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.maiquan.aladdin.mapper.CommentImgMapper" >
+  <resultMap id="BaseResultMap" type="com.maiquan.aladdin.domain.CommentImg" >
+    <id column="ID" property="ID" jdbcType="INTEGER" />
+    <result column="commentID" property="commentID" jdbcType="INTEGER" />
+    <result column="imgPath" property="imgPath" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="sortOrder" property="sortOrder" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="delTime" property="delTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, commentID, imgPath, status, sortOrder, createTime, updateTime, delTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_comment_img
+    where ID = #{ID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_comment_img
+    where ID = #{ID,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.maiquan.aladdin.domain.CommentImg" >
+    insert into t_comment_img (ID, commentID, imgPath, 
+      status, sortOrder, createTime, 
+      updateTime, delTime)
+    values (#{ID,jdbcType=INTEGER}, #{commentID,jdbcType=INTEGER}, #{imgPath,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{sortOrder,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{delTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.maiquan.aladdin.domain.CommentImg" >
+    insert into t_comment_img
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ID != null" >
+        ID,
+      </if>
+      <if test="commentID != null" >
+        commentID,
+      </if>
+      <if test="imgPath != null" >
+        imgPath,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="sortOrder != null" >
+        sortOrder,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="updateTime != null" >
+        updateTime,
+      </if>
+      <if test="delTime != null" >
+        delTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ID != null" >
+        #{ID,jdbcType=INTEGER},
+      </if>
+      <if test="commentID != null" >
+        #{commentID,jdbcType=INTEGER},
+      </if>
+      <if test="imgPath != null" >
+        #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sortOrder != null" >
+        #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delTime != null" >
+        #{delTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.maiquan.aladdin.domain.CommentImg" >
+    update t_comment_img
+    <set >
+      <if test="commentID != null" >
+        commentID = #{commentID,jdbcType=INTEGER},
+      </if>
+      <if test="imgPath != null" >
+        imgPath = #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sortOrder != null" >
+        sortOrder = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delTime != null" >
+        delTime = #{delTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{ID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.maiquan.aladdin.domain.CommentImg" >
+    update t_comment_img
+    set commentID = #{commentID,jdbcType=INTEGER},
+      imgPath = #{imgPath,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      sortOrder = #{sortOrder,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      delTime = #{delTime,jdbcType=TIMESTAMP}
+    where ID = #{ID,jdbcType=INTEGER}
+  </update>
+</mapper>

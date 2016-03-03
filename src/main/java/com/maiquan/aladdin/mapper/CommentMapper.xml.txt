@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maiquan.aladingback.mapper.CommentMapper">
+	
+  <resultMap id="BaseResultMap" type="com.maiquan.aladingback.domain.Comment">
+    <id column="ID" jdbcType="INTEGER" property="ID" />
+    <result column="mqID" jdbcType="VARCHAR" property="mqID" />
+    <result column="orderID" jdbcType="INTEGER" property="orderID" />
+    <result column="productID" jdbcType="INTEGER" property="productID" />
+    <result column="orderProdID" jdbcType="INTEGER" property="orderProdID" />
+    <result column="commentDesc" jdbcType="VARCHAR" property="commentDesc" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="delTime" jdbcType="TIMESTAMP" property="delTime" />
+    <collection property="imgs" resultMap="commentImgs" ofType="com.maiquan.aladingback.domain.CommentImg" columnPrefix="img_"/>
+  </resultMap>
+  
+  <resultMap id="commentImgs" type="com.maiquan.aladingback.domain.CommentImg" >
+  		<id column="ID" jdbcType="INTEGER" property="ID" />
+    	<result column="commentID" jdbcType="INTEGER" property="commentID" />
+    	<result column="imgPath" jdbcType="VARCHAR" property="imgPath" />
+    	<result column="status" jdbcType="VARCHAR" property="status" />
+    	<result column="sortOrder" jdbcType="INTEGER" property="sortOrder" />
+    	<result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    	<result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+    	<result column="delTime" jdbcType="TIMESTAMP" property="delTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    comment.ID, comment.mqID, comment.orderID, comment.productID, comment.orderProdID, comment.commentDesc, comment.status, comment.createTime, comment.delTime,
+    commentImg.ID img_ID,commentImg.commentID img_commentID,commentImg.imgPath img_imgPath,commentImg.status img_status,commentImg.sortOrder img_sortOrder,commentImg.createTime img_createTime,commentImg.updateTime img_updateTime,commentImg.delTime img_delTime
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_comment comment
+    left join t_comment_img commentImg
+    on comment.ID = commentImg.commentID
+    where comment.ID = #{ID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_comment
+    where ID = #{ID,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.maiquan.aladingback.domain.Comment">
+    insert into t_comment (ID, mqID, orderID, 
+      productID, orderProdID, commentDesc, 
+      status, createTime, delTime
+      )
+    values (#{ID,jdbcType=INTEGER}, #{mqID,jdbcType=VARCHAR}, #{orderID,jdbcType=INTEGER}, 
+      #{productID,jdbcType=INTEGER}, #{orderProdID,jdbcType=INTEGER}, #{commentDesc,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{delTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.maiquan.aladingback.domain.Comment">
+    insert into t_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        ID,
+      </if>
+      <if test="mqID != null">
+        mqID,
+      </if>
+      <if test="orderID != null">
+        orderID,
+      </if>
+      <if test="productID != null">
+        productID,
+      </if>
+      <if test="orderProdID != null">
+        orderProdID,
+      </if>
+      <if test="commentDesc != null">
+        commentDesc,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="delTime != null">
+        delTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        #{ID,jdbcType=INTEGER},
+      </if>
+      <if test="mqID != null">
+        #{mqID,jdbcType=VARCHAR},
+      </if>
+      <if test="orderID != null">
+        #{orderID,jdbcType=INTEGER},
+      </if>
+      <if test="productID != null">
+        #{productID,jdbcType=INTEGER},
+      </if>
+      <if test="orderProdID != null">
+        #{orderProdID,jdbcType=INTEGER},
+      </if>
+      <if test="commentDesc != null">
+        #{commentDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delTime != null">
+        #{delTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.maiquan.aladingback.domain.Comment">
+    update t_comment
+    <set>
+      <if test="mqID != null">
+        mqID = #{mqID,jdbcType=VARCHAR},
+      </if>
+      <if test="orderID != null">
+        orderID = #{orderID,jdbcType=INTEGER},
+      </if>
+      <if test="productID != null">
+        productID = #{productID,jdbcType=INTEGER},
+      </if>
+      <if test="orderProdID != null">
+        orderProdID = #{orderProdID,jdbcType=INTEGER},
+      </if>
+      <if test="commentDesc != null">
+        commentDesc = #{commentDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delTime != null">
+        delTime = #{delTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{ID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.maiquan.aladingback.domain.Comment">
+    update t_comment
+    set mqID = #{mqID,jdbcType=VARCHAR},
+      orderID = #{orderID,jdbcType=INTEGER},
+      productID = #{productID,jdbcType=INTEGER},
+      orderProdID = #{orderProdID,jdbcType=INTEGER},
+      commentDesc = #{commentDesc,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      delTime = #{delTime,jdbcType=TIMESTAMP}
+    where ID = #{ID,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getCountByCondition" parameterType="com.maiquan.aladingback.domain.Comment" resultType="INT">
+  	select count(ID) from t_comment comment
+	<where>
+      <if test="mqID != null">
+        AND comment.mqID = #{mqID,jdbcType=VARCHAR} 
+      </if>
+      <if test="orderID != null">
+        AND comment.orderID = #{orderID,jdbcType=INTEGER} 
+      </if>
+      <if test="productID != null">
+        AND comment.productID = #{productID,jdbcType=INTEGER} 
+      </if>
+      <if test="orderProdID != null">
+        AND comment.orderProdID = #{orderProdID,jdbcType=INTEGER} 
+      </if>
+      <if test="status != null">
+        AND comment.status = #{status,jdbcType=VARCHAR} 
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from t_comment comment
+    left join t_comment_img commentImg
+    on comment.ID = commentImg.commentID
+  </select>
+  
+  <select id="selectByCondition" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from t_comment comment
+    left join t_comment_img commentImg
+    on comment.ID = commentImg.commentID
+    <where>
+      <if test="comment.mqID != null">
+        AND comment.mqID = #{comment.mqID,jdbcType=VARCHAR}
+      </if>
+      <if test="comment.orderID != null">
+        AND comment.orderID = #{comment.orderID,jdbcType=INTEGER} 
+      </if>
+      <if test="comment.productID != null">
+        AND comment.productID = #{comment.productID,jdbcType=INTEGER} 
+      </if>
+      <if test="comment.orderProdID != null">
+        AND comment.orderProdID = #{comment.orderProdID,jdbcType=INTEGER} 
+      </if>
+      <if test="comment.status != null">
+        AND comment.status = #{comment.status,jdbcType=VARCHAR} 
+      </if>
+      <if test="pageIndex != null and pageSize !=null">
+	    AND comment.ID IN (select c.ID from comment c limit #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER})
+	  </if>
+	  <if test="pageIndex == null and pageSize != null">
+    	AND comment.ID IN (select c.ID from comment c limit #{pageSize,jdbcType=INTEGER})
+      </if>
+    </where>
+    
+  </select>
+  
+</mapper>
