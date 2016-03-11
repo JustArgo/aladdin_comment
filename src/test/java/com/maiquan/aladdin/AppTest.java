@@ -13,18 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.maiquan.aladdin.domain.Comment;
-import com.maiquan.aladdin.domain.CommentImg;
-import com.maiquan.aladdin.mapper.CommentImgMapper;
-import com.maiquan.aladdin.mapper.CommentMapper;
-import com.maiquan.aladdin.service.ICommentService;
+import com.maiquan.aladdin_comment.domain.Comment;
+import com.maiquan.aladdin_comment.domain.CommentImg;
+import com.maiquan.aladdin_comment.mapper.CommentImgMapper;
+import com.maiquan.aladdin_comment.mapper.CommentMapper;
+import com.maiquan.aladdin_comment.service.ICommentService;
 
 
 /**
  * Unit test for simple App.
  */
-/*@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("applicationContext.xml")*/
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext.xml")
 public class AppTest {
 	
 	@Autowired
@@ -36,6 +36,7 @@ public class AppTest {
 	@Autowired 
 	private ICommentService commentService;
 	
+	@Test
 	public void testMapper(){
 		
 		Comment comment = new Comment();

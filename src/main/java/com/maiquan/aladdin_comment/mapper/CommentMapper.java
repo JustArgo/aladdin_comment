@@ -1,12 +1,13 @@
-package com.maiquan.aladdin.mapper;
+package com.maiquan.aladdin_comment.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.maiquan.aladdin.domain.Comment;
+import com.maiquan.aladdin_comment.domain.Comment;
 
 public interface CommentMapper {
+	
     int deleteByPrimaryKey(Integer ID);
 
     int insert(Comment record);

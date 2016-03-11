@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.maiquan.aladingback.mapper.CommentMapper">
+<mapper namespace="com.maiquan.aladdin_comment.mapper.CommentMapper">
 	
-  <resultMap id="BaseResultMap" type="com.maiquan.aladingback.domain.Comment">
+  <resultMap id="BaseResultMap" type="com.maiquan.aladdin_comment.domain.Comment">
     <id column="ID" jdbcType="INTEGER" property="ID" />
     <result column="mqID" jdbcType="VARCHAR" property="mqID" />
     <result column="orderID" jdbcType="INTEGER" property="orderID" />
@@ -12,38 +12,24 @@
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
     <result column="delTime" jdbcType="TIMESTAMP" property="delTime" />
-    <collection property="imgs" resultMap="commentImgs" ofType="com.maiquan.aladingback.domain.CommentImg" columnPrefix="img_"/>
-  </resultMap>
-  
-  <resultMap id="commentImgs" type="com.maiquan.aladingback.domain.CommentImg" >
-  		<id column="ID" jdbcType="INTEGER" property="ID" />
-    	<result column="commentID" jdbcType="INTEGER" property="commentID" />
-    	<result column="imgPath" jdbcType="VARCHAR" property="imgPath" />
-    	<result column="status" jdbcType="VARCHAR" property="status" />
-    	<result column="sortOrder" jdbcType="INTEGER" property="sortOrder" />
-    	<result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
-    	<result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
-    	<result column="delTime" jdbcType="TIMESTAMP" property="delTime" />
+    <collection property="imgs" ofType="com.maiquan.aladdin_comment.domain.CommentImg" column="ID" select="com.maiquan.aladdin_comment.mapper.CommentImgMapper.selectByPrimaryKey"/>
   </resultMap>
   
   <sql id="Base_Column_List">
-    comment.ID, comment.mqID, comment.orderID, comment.productID, comment.orderProdID, comment.commentDesc, comment.status, comment.createTime, comment.delTime,
-    commentImg.ID img_ID,commentImg.commentID img_commentID,commentImg.imgPath img_imgPath,commentImg.status img_status,commentImg.sortOrder img_sortOrder,commentImg.createTime img_createTime,commentImg.updateTime img_updateTime,commentImg.delTime img_delTime
+    ID, mqID, orderID, productID, orderProdID, commentDesc, status, createTime, delTime
   </sql>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_comment comment
-    left join t_comment_img commentImg
-    on comment.ID = commentImg.commentID
-    where comment.ID = #{ID,jdbcType=INTEGER}
+    from t_comment
+    where ID = #{ID,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_comment
     where ID = #{ID,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.maiquan.aladingback.domain.Comment">
+  <insert id="insert" parameterType="com.maiquan.aladdin_comment.domain.Comment">
     insert into t_comment (ID, mqID, orderID, 
       productID, orderProdID, commentDesc, 
       status, createTime, delTime
@@ -53,7 +39,7 @@
       #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{delTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.maiquan.aladingback.domain.Comment">
+  <insert id="insertSelective" parameterType="com.maiquan.aladdin_comment.domain.Comment">
     insert into t_comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="ID != null">
@@ -114,7 +100,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.maiquan.aladingback.domain.Comment">
+  <update id="updateByPrimaryKeySelective" parameterType="com.maiquan.aladdin_comment.domain.Comment">
     update t_comment
     <set>
       <if test="mqID != null">
@@ -144,7 +130,7 @@
     </set>
     where ID = #{ID,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.maiquan.aladingback.domain.Comment">
+  <update id="updateByPrimaryKey" parameterType="com.maiquan.aladdin_comment.domain.Comment">
     update t_comment
     set mqID = #{mqID,jdbcType=VARCHAR},
       orderID = #{orderID,jdbcType=INTEGER},
@@ -157,23 +143,23 @@
     where ID = #{ID,jdbcType=INTEGER}
   </update>
   
-  <select id="getCountByCondition" parameterType="com.maiquan.aladingback.domain.Comment" resultType="INT">
-  	select count(ID) from t_comment comment
+  <select id="getCountByCondition" parameterType="com.maiquan.aladdin_comment.domain.Comment" resultType="INT">
+  	select count(ID) from t_comment
 	<where>
       <if test="mqID != null">
-        AND comment.mqID = #{mqID,jdbcType=VARCHAR} 
+        AND mqID = #{mqID,jdbcType=VARCHAR} 
       </if>
       <if test="orderID != null">
-        AND comment.orderID = #{orderID,jdbcType=INTEGER} 
+        AND orderID = #{orderID,jdbcType=INTEGER} 
       </if>
       <if test="productID != null">
-        AND comment.productID = #{productID,jdbcType=INTEGER} 
+        AND productID = #{productID,jdbcType=INTEGER} 
       </if>
       <if test="orderProdID != null">
-        AND comment.orderProdID = #{orderProdID,jdbcType=INTEGER} 
+        AND orderProdID = #{orderProdID,jdbcType=INTEGER} 
       </if>
       <if test="status != null">
-        AND comment.status = #{status,jdbcType=VARCHAR} 
+        AND status = #{status,jdbcType=VARCHAR} 
       </if>
     </where>
   </select>
@@ -181,41 +167,43 @@
   <select id="selectAll" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List" />
-    from t_comment comment
-    left join t_comment_img commentImg
-    on comment.ID = commentImg.commentID
+    from t_comment 
   </select>
   
   <select id="selectByCondition" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List" />
-    from t_comment comment
-    left join t_comment_img commentImg
-    on comment.ID = commentImg.commentID
+    from t_comment
     <where>
       <if test="comment.mqID != null">
-        AND comment.mqID = #{comment.mqID,jdbcType=VARCHAR}
+        AND mqID = #{comment.mqID,jdbcType=VARCHAR}
       </if>
       <if test="comment.orderID != null">
-        AND comment.orderID = #{comment.orderID,jdbcType=INTEGER} 
+        AND orderID = #{comment.orderID,jdbcType=INTEGER} 
       </if>
       <if test="comment.productID != null">
-        AND comment.productID = #{comment.productID,jdbcType=INTEGER} 
+        AND productID = #{comment.productID,jdbcType=INTEGER} 
       </if>
       <if test="comment.orderProdID != null">
-        AND comment.orderProdID = #{comment.orderProdID,jdbcType=INTEGER} 
+        AND orderProdID = #{comment.orderProdID,jdbcType=INTEGER} 
       </if>
       <if test="comment.status != null">
-        AND comment.status = #{comment.status,jdbcType=VARCHAR} 
-      </if>
-      <if test="pageIndex != null and pageSize !=null">
-	    AND comment.ID IN (select c.ID from comment c limit #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER})
-	  </if>
-	  <if test="pageIndex == null and pageSize != null">
-    	AND comment.ID IN (select c.ID from comment c limit #{pageSize,jdbcType=INTEGER})
+        AND t_comment.status = #{comment.status,jdbcType=VARCHAR} 
       </if>
     </where>
-    
+    <if test="pageIndex != null and pageSize !=null">
+    	LIMIT #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+    <if test="pageIndex == null and pageSize != null">
+    	LIMIT #{pageSize,jdbcType=INTEGER}
+     </if>
+  </select>
+  
+  <select id="selectByOrderProdID" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+    from t_comment
+    where orderProdID = #{orderProdID,jdbcType=INTEGER}
   </select>
   
 </mapper>

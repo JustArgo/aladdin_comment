@@ -1,6 +1,6 @@
-package com.maiquan.aladdin.mapper;
+package com.maiquan.aladdin_comment.mapper;
 
-import com.maiquan.aladdin.domain.CommentImg;
+import com.maiquan.aladdin_comment.domain.CommentImg;
 
 public interface CommentImgMapper {
     int deleteByPrimaryKey(Integer ID);

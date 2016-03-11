@@ -1,4 +1,4 @@
-package com.maiquan.aladdin.domain;
+package com.maiquan.aladdin_comment.domain;
 
 import java.io.Serializable;
 import java.util.Date;

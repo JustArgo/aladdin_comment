@@ -1,4 +1,4 @@
-package com.maiquan.aladdin.service.impl;
+package com.maiquan.aladdin_comment.service.impl;
 
 import java.util.Map;
 
@@ -8,8 +8,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.maiquan.aladdin.domain.CommonParam;
-import com.maiquan.aladdin.service.ICommentRestService;
+import com.maiquan.aladdin_comment.domain.CommonParam;
+import com.maiquan.aladdin_comment.service.ICommentRestService;
 
 
 @Path("/api/comment_service/comment")
