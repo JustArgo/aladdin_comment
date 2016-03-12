@@ -25,7 +25,6 @@
         <property name="locations">  
            <list>  
               <!-- 这里支持多种寻址方式：classpath和file -->  
-              <value>classpath:redis.properties</value>
               <value>classpath:db.properties</value>
             </list> 
         </property>  
@@ -52,7 +51,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="typeAliasesPackage" value="com.maiquan.aladdin_comment.domain"/>
-		<property name="mapperLocations" value="classpath:com/maiquan/aladdin_comment/mapper/*Mapper.xml"/>
+		<property name="mapperLocations" value="classpath*:com/maiquan/aladdin_comment/mapper/*Mapper.xml"/>
 	</bean>
 	
 
